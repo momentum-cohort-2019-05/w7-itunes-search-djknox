@@ -1,3 +1,6 @@
+h1, h2 {
+    text-align: center;
+}
 #searchBar {
     display: block;
     margin: auto;
@@ -14,6 +17,10 @@
     margin: 2rem auto;
 }
 
+#resultPreview {
+    text-align: center;
+}
 #resultsDisplay {
     background-color: lightgrey;
+    text-align: center;
 }

@@ -9,11 +9,25 @@
     <title>iTunes Search</title>
 </head>
 <body>
+    <h1>iTunes Search</h1>
     <input id="searchBar" type="text" placeholder="search for a band or artist...">
     <button id="searchButton">search</button>
     <hr>
-    <div id="resultsDisplay">
+    <div id="results">
+        <h2>Results</h2>
+        <div id="resultPreview">
+            <img id="resultPreviewImg" src="" hidden>
+            <p id="resultPreviewDescription" hidden></p>
+            <audio id="resultPreviewAudio" controls src=""></audio>
+        </div>
+        <div id="resultsDisplay">
 
+        </div>
     </div>
 </body>
 </html>
+
+<!-- <figure>
+    <img src="pic_trulli.jpg" alt="Trulli" style="width:100%">
+    <figcaption>Fig.1 - Trulli, Puglia, Italy.</figcaption>
+</figure> -->
