@@ -13,3 +13,7 @@
     display: block;
     margin: 2rem auto;
 }
+
+#resultsDisplay {
+    background-color: lightgrey;
+}
