@@ -2,6 +2,7 @@
 
 const searchBar = document.querySelector('#searchBar');
 const searchButton = document.querySelector('#searchButton');
+const resultsDescription = document.querySelector('#resultsDescription');
 const resultsDisplay = document.querySelector('#resultsDisplay');
 const resultPreview = document.querySelector('#resultPreview');
 const resultPreviewImg = document.querySelector('#resultPreviewImg');
@@ -16,6 +17,9 @@ searchButton.addEventListener('click', function () {
             return response.json();
         })
         .then(function(response) {
+            resultsDescription.innerText = `Found ${response.resultCount} results.`;
+            resultsDescription.removeAttribute('hidden');
+            
             addResultsToDisplay(response.results);
         })
         .catch(function(error) {

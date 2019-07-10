@@ -17,9 +17,14 @@ h1, h2 {
     margin: 2rem auto;
 }
 
+#resultsDescription {
+    text-align: center;
+}
+
 #resultPreview {
     text-align: center;
 }
+
 #resultsDisplay {
     background-color: lightgrey;
     text-align: center;
