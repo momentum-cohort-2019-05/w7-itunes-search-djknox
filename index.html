@@ -10,14 +10,17 @@
 </head>
 <body>
     <h1>iTunes Search</h1>
-    <input id="searchBar" type="text" placeholder="search for a band or artist...">
+    <input id="searchBar" type="text" placeholder="search iTunes...">
     <div id="searchAttribute">
         Search for:
-        <select id="searchAttributeSelection">
-            <option value="artistTerm">artist</option>
-            <option value="songTerm">song</option>
-            <option value="albumTerm">album</option>
-        </select>
+        <div id="searchAttributeSelection">
+            <input type="radio" name="attributeSelection" id="artist" value="artistTerm" checked>
+            <label for="artist">artist</label>
+            <input type="radio" name="attributeSelection" id="song" value="songTerm">
+            <label for="song">song</label>
+            <input type="radio" name="attributeSelection" id="album" value="albumTerm">
+            <label for="album">album</label>
+        </div>
     </div>
     <div id="searchLimit">
         Limit to:
