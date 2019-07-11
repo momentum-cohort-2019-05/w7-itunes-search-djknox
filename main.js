@@ -19,7 +19,7 @@ searchButton.addEventListener('click', function () {
         .then(function(response) {
             resultsDescription.innerText = `Found ${response.resultCount} results.`;
             resultsDescription.removeAttribute('hidden');
-            
+
             addResultsToDisplay(response.results);
         })
         .catch(function(error) {
@@ -65,6 +65,11 @@ function addResultsToDisplay(results) {
         let resultDiv = document.createElement('div');
         resultDiv.classList += 'result';
 
+        // create p for artist name
+        let resultArtist = document.createElement('p');
+        resultArtist.innerText = result.artistName;
+        resultDiv.appendChild(resultArtist);
+
         // create img for artwork
         let resultImg = document.createElement('img');
         resultImg.classList += 'result-img';
@@ -72,10 +77,10 @@ function addResultsToDisplay(results) {
         resultImg.alt = `${result.artistName} - ${result.trackName}`;
         resultDiv.appendChild(resultImg);
 
-        // create p for description
-        let resultDescription = document.createElement('p');
-        resultDescription.innerText = `${result.artistName} - ${result.trackName}`;
-        resultDiv.appendChild(resultDescription);
+        // create p for track name
+        let resultTrackName = document.createElement('p');
+        resultTrackName.innerText = result.trackName;
+        resultDiv.appendChild(resultTrackName);
 
         // create hidden anchor for preview url
         let resultPreviewUrl = document.createElement('a');
