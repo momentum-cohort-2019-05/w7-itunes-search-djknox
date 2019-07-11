@@ -1,7 +1,9 @@
 // https://itunes.apple.com/search?term=jack+johnson
 // TODO:
-// (?) add event delegation rather than adding event listeners to each result's div
+// add event delegation rather than adding event listeners to each result's div
 // (?) return api results into an object and create the html elements outside of fetch()
+// add 'Enter' key functionality
+//      can put searchBar + searchButton inside a form and preventDefault form submission
 
 const searchBar = document.querySelector('#searchBar');
 const searchButton = document.querySelector('#searchButton');
@@ -11,8 +13,8 @@ const resultPreview = document.querySelector('#resultPreview');
 const resultPreviewImg = document.querySelector('#resultPreviewImg');
 const resultPreviewAudio = document.querySelector('#resultPreviewAudio');
 const resultPreviewDescription = document.querySelector('#resultPreviewDescription');
-let resultAttribute = document.querySelector('#searchAttributeSelection');
-let resultLimit = document.querySelector('#searchLimitSelection');
+const resultAttribute = document.querySelector('#searchAttributeSelection');
+const resultLimit = document.querySelector('#searchLimitSelection');
 const results = document.querySelectorAll('.result');
 
 searchButton.addEventListener('click', function () {
@@ -26,6 +28,7 @@ searchButton.addEventListener('click', function () {
             resultsDescription.removeAttribute('hidden');
 
             addResultsToDisplay(response.results);
+            resultsDescription.scrollIntoView();
         })
         .catch(function(error) {
             console.log('Request failed', error);
@@ -65,7 +68,7 @@ function addClickEventListenerToResult(resultDiv) {
         resultPreviewImg.removeAttribute('hidden');
 
         // add preview url to audio tag
-        resultPreviewAudio.src = resultDiv.querySelector('a[class=result-preview-url]').href;
+        resultPreviewAudio.src = resultDiv.dataset.previewUrl;
         resultPreviewAudio.autoplay = true;
 
         // add description
@@ -102,13 +105,8 @@ function addResultsToDisplay(results) {
         resultAlbum.innerText += result.collectionName;
         resultDiv.appendChild(resultAlbum);
 
-        // create hidden anchor for preview url
-        let resultPreviewUrl = document.createElement('a');
-        resultPreviewUrl.setAttribute('hidden', 'true');
-        resultPreviewUrl.classList += 'result-preview-url';
-        resultPreviewUrl.innerText = 'Preview Link';
-        resultPreviewUrl.href = result.previewUrl;
-        resultDiv.appendChild(resultPreviewUrl);
+        // create data attribute for preview url
+        resultDiv.setAttribute('data-preview-url', result.previewUrl);
 
         addClickEventListenerToResult(resultDiv);
         resultsDisplay.appendChild(resultDiv);
