@@ -1,4 +1,14 @@
 // https://itunes.apple.com/search?term=jack+johnson
+// TODO:
+// (?) add event delegation rather than adding event listeners to each result's div
+// (?) return api results into an object and create the html elements outside of fetch()
+
+// DONE:
+// replace replaceSpacesWithPlusSigns() with encodeURIComponent()
+// narrow api call to return only songs:
+//      &media=music, &entity=musicTrack, &searchTerm=artistTerm, &limit=200, etc.
+// add option for user to limit results and place in resultLimit
+// add option for user to search for artist, song, or album and place in resultAttribute
 
 const searchBar = document.querySelector('#searchBar');
 const searchButton = document.querySelector('#searchButton');
@@ -9,6 +19,8 @@ const resultPreviewImg = document.querySelector('#resultPreviewImg');
 const resultPreviewAudio = document.querySelector('#resultPreviewAudio');
 const resultPreviewDescription = document.querySelector('#resultPreviewDescription');
 const results = document.querySelectorAll('.result');
+let resultAttribute = document.querySelector('#searchAttributeSelection');
+let resultLimit = document.querySelector('#searchLimitSelection');
 
 searchButton.addEventListener('click', function () {
     let fullUrl = createFullUrl();
@@ -23,17 +35,17 @@ searchButton.addEventListener('click', function () {
             addResultsToDisplay(response.results);
         })
         .catch(function(error) {
-            console.log('Request failed', error)
+            console.log('Request failed', error);
         });
 });
 
-function replaceSpacesWithPlusSigns(string) {
-    return string.replace(/ /g, '+');
-}
-
 function createFullUrl() {
-    let searchQuery = replaceSpacesWithPlusSigns(searchBar.value);
-    return `https://itunes-api-proxy.glitch.me/search?term=${searchQuery}`;
+    let term = `term=${encodeURIComponent(searchBar.value)}`;
+    let media = 'media=music';
+    let entity = 'entity=song';
+    let attribute = `attribute=${resultAttribute.options[resultAttribute.selectedIndex].value}`;
+    let limit = `limit=${resultLimit.options[resultLimit.selectedIndex].value}`;
+    return `https://itunes-api-proxy.glitch.me/search?${term}&${media}&${entity}&${attribute}&${limit}`;
 }
 
 function clearResultsDisplay() {
@@ -81,6 +93,11 @@ function addResultsToDisplay(results) {
         let resultTrackName = document.createElement('p');
         resultTrackName.innerText = result.trackName;
         resultDiv.appendChild(resultTrackName);
+
+        //create p for album name
+        let resultAlbumName = document.createElement('p');
+        resultAlbumName.innerText = result.collectionName;
+        resultDiv.appendChild(resultAlbumName);
 
         // create hidden anchor for preview url
         let resultPreviewUrl = document.createElement('a');

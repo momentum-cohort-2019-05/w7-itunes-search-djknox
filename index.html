@@ -11,6 +11,24 @@
 <body>
     <h1>iTunes Search</h1>
     <input id="searchBar" type="text" placeholder="search for a band or artist...">
+    <div id="searchAttribute">
+        Search for:
+        <select id="searchAttributeSelection">
+            <option value="artistTerm">artist</option>
+            <option value="songTerm">song</option>
+            <option value="albumTerm">album</option>
+        </select>
+    </div>
+    <div id="searchLimit">
+        Limit to:
+        <select id="searchLimitSelection">
+            <option value="25">25 results</option>
+            <option value="50">50 results</option>
+            <option value="100">100 results</option>
+            <option value="150">150 results</option>
+            <option value="200">200 results</option>
+        </select>
+    </div>
     <button id="searchButton">search</button>
     <hr>
     <div id="results">
