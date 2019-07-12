@@ -47,6 +47,7 @@ h1, h2 {
 
 #resultPreview {
     text-align: center;
+    margin: 1rem;
 }
 
 #resultsDisplay {

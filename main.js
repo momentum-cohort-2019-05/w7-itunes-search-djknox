@@ -1,8 +1,7 @@
 // https://itunes.apple.com/search?term=jack+johnson
 // TODO:
-// add event delegation rather than adding event listeners to each result's div
 // (?) return api results into an object and create the html elements outside of fetch()
-// add 'Enter' key functionality
+// add 'Enter' key functionality:
 //      can put searchBar + searchButton inside a form and preventDefault form submission
 
 const searchBar = document.querySelector('#searchBar');
@@ -35,6 +34,35 @@ searchButton.addEventListener('click', function () {
         });
 });
 
+resultsDisplay.addEventListener('click', function (event) {
+    // if event.target is a child of div class="result", set targetResultDiv to the parent div
+    // else, set targetResultDiv to event.target
+    let targetResultDiv;
+    if (event.target.matches('div.result')) {
+        targetResultDiv = event.target;
+    }
+    else if (event.target.closest('div.result')) {
+        targetResultDiv = event.target.parentElement;
+    }
+
+    // if event.target is div class="result" or if event.target is a child of div class="result"
+    // then add things to resultPreview elements
+    if (event.target.matches('div.result') || event.target.closest('div.result')) {
+        // add img url for artwork
+        resultPreviewImg.src = targetResultDiv.querySelector('img[class=result-img]').src;
+        resultPreviewImg.removeAttribute('hidden');
+
+        // add preview url to audio tag
+        resultPreviewAudio.src = targetResultDiv.dataset.previewUrl;
+        resultPreviewAudio.autoplay = true;
+
+        // add description
+        resultPreviewDescription.innerText = targetResultDiv.querySelector('div[class=result-description]').innerText;
+        resultPreviewDescription.removeAttribute('hidden');
+    }
+
+});
+
 function createFullUrl() {
     let term = `term=${encodeURIComponent(searchBar.value)}`;
     let media = 'media=music';
@@ -61,6 +89,9 @@ function clearResultsDisplay() {
     resultsDisplay.innerHTML = '';
 }
 
+// addClickEventListener() is not being used anymore.
+// instead, event delegation is being used with a single click listener on #resultsDisplay
+/*
 function addClickEventListenerToResult(resultDiv) {
     resultDiv.addEventListener('click', function () {
         // add img url for artwork
@@ -77,6 +108,7 @@ function addClickEventListenerToResult(resultDiv) {
 
     });
 }
+*/
 
 function addResultsToDisplay(results) {
     clearResultsDisplay();
@@ -93,22 +125,28 @@ function addResultsToDisplay(results) {
         resultImg.alt = `${result.artistName} - ${result.trackName}`;
         resultDiv.appendChild(resultImg);
 
+        //create div for result description
+        let resultDescription = document.createElement('div');
+        resultDescription.classList += 'result-description';
+
         // create p for artist name and track title
-        let resultDescription = document.createElement('p');
-        resultDescription.innerText += result.artistName;
-        resultDescription.innerText += ' - ';
-        resultDescription.innerText += result.trackName;
-        resultDiv.appendChild(resultDescription);
+        let resultArtistAndTrack = document.createElement('p');
+        resultArtistAndTrack.innerText += result.artistName;
+        resultArtistAndTrack.innerText += ' - ';
+        resultArtistAndTrack.innerText += result.trackName;
+        resultDescription.appendChild(resultArtistAndTrack);
 
         // create p for album title
         let resultAlbum = document.createElement('p');
         resultAlbum.innerText += result.collectionName;
-        resultDiv.appendChild(resultAlbum);
+        resultDescription.appendChild(resultAlbum);
+        resultDiv.appendChild(resultDescription);
 
         // create data attribute for preview url
         resultDiv.setAttribute('data-preview-url', result.previewUrl);
 
-        addClickEventListenerToResult(resultDiv);
+        // addClickEventListener() replaced by #resultsDisplay event delegation
+        // addClickEventListenerToResult(resultDiv);
         resultsDisplay.appendChild(resultDiv);
     }
 }

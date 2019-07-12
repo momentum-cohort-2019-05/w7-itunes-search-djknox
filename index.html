@@ -10,38 +10,41 @@
 </head>
 <body>
     <h1 id="mainHeading">iTunes Search</h1>
-    <input id="searchBar" type="text" placeholder="search iTunes...">
-    <div id="searchAttribute">
-        Search for:
-        <div id="searchAttributeSelection">
-            <input type="radio" name="attributeSelection" id="artist" value="artistTerm" checked>
-            <label for="artist">artist</label>
-            <input type="radio" name="attributeSelection" id="song" value="songTerm">
-            <label for="song">song</label>
-            <input type="radio" name="attributeSelection" id="album" value="albumTerm">
-            <label for="album">album</label>
+    <div id="search">
+        <input id="searchBar" type="text" placeholder="search iTunes...">
+        <div id="searchAttribute">
+            Search for:
+            <div id="searchAttributeSelection">
+                <input type="radio" name="attributeSelection" id="artist" value="artistTerm" checked>
+                <label for="artist">artist</label>
+                <input type="radio" name="attributeSelection" id="song" value="songTerm">
+                <label for="song">song</label>
+                <input type="radio" name="attributeSelection" id="album" value="albumTerm">
+                <label for="album">album</label>
+            </div>
         </div>
+        <div id="searchLimit">
+            Limit to:
+            <select id="searchLimitSelection">
+                <option value="25">25 results</option>
+                <option value="50">50 results</option>
+                <option value="100">100 results</option>
+                <option value="150">150 results</option>
+                <option value="200">200 results</option>
+            </select>
+        </div>
+        <button id="searchButton">search</button>
+        <p id="resultsDescription" hidden></p>
     </div>
-    <div id="searchLimit">
-        Limit to:
-        <select id="searchLimitSelection">
-            <option value="25">25 results</option>
-            <option value="50">50 results</option>
-            <option value="100">100 results</option>
-            <option value="150">150 results</option>
-            <option value="200">200 results</option>
-        </select>
+    <hr>
+    <div id="resultPreview">
+        <img id="resultPreviewImg" src="" hidden>
+        <p id="resultPreviewDescription" hidden></p>
+        <audio id="resultPreviewAudio" controls src=""></audio>
     </div>
-    <button id="searchButton">search</button>
     <hr>
     <div id="results">
         <h2>Results</h2>
-        <div id="resultPreview">
-            <img id="resultPreviewImg" src="" hidden>
-            <p id="resultPreviewDescription" hidden></p>
-            <audio id="resultPreviewAudio" controls src=""></audio>
-        </div>
-        <p id="resultsDescription" hidden></p>
         <div id="resultsDisplay">
         </div>
     </div>
