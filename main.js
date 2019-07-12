@@ -1,9 +1,8 @@
 // https://itunes.apple.com/search?term=jack+johnson
 // TODO:
 // (?) return api results into an object and create the html elements outside of fetch()
-// add 'Enter' key functionality:
-//      can put searchBar + searchButton inside a form and preventDefault form submission
 
+const searchForm = document.querySelector('#search');
 const searchBar = document.querySelector('#searchBar');
 const searchButton = document.querySelector('#searchButton');
 const resultsDescription = document.querySelector('#resultsDescription');
@@ -16,7 +15,9 @@ const resultAttribute = document.querySelector('#searchAttributeSelection');
 const resultLimit = document.querySelector('#searchLimitSelection');
 const results = document.querySelectorAll('.result');
 
-searchButton.addEventListener('click', function () {
+// event listener for when the form is submitted
+searchForm.addEventListener('submit', function (event) {
+    event.preventDefault();
     let fullUrl = createFullUrl();
     fetch(fullUrl)
         .then(function(response) {
@@ -34,6 +35,7 @@ searchButton.addEventListener('click', function () {
         });
 });
 
+// event listener for when a result is clicked
 resultsDisplay.addEventListener('click', function (event) {
     // if event.target is a child of div class="result", set targetResultDiv to the parent div
     // else, set targetResultDiv to event.target
@@ -60,7 +62,6 @@ resultsDisplay.addEventListener('click', function (event) {
         resultPreviewDescription.innerText = targetResultDiv.querySelector('div[class=result-description]').innerText;
         resultPreviewDescription.removeAttribute('hidden');
     }
-
 });
 
 function createFullUrl() {
